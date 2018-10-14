@@ -39,13 +39,21 @@ namespace HotelBookingEngine
                 return "Invalid dates";
             }
 
-            //Problem - how do you unit test this behaviour when DateTime.Today changes day-to-day?
-            if (bookingRequest.CheckInLocalDate < DateTime.Today)
+            var createdLocalDate = ConvertToLocalDate(bookingRequest.CreatedUtcDateTime, bookingRequest.Hotel.TimeZone);
+            if (bookingRequest.CheckInLocalDate < createdLocalDate)
             {
                 return "Invalid dates";
             }
 
             return null;
+        }
+
+        private DateTime ConvertToLocalDate(DateTime utcDateTime, string localTimeZone)
+        {
+            //In the real world, you would use a library like NodaTime
+            //to perform the conversion for you. I'm not doing any conversions
+            //here because this is a demonstration of concepts.
+            return utcDateTime.Date;
         }
     }
 }

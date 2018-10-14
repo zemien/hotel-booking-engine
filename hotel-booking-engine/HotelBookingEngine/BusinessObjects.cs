@@ -18,6 +18,14 @@ namespace HotelBookingEngine
         public string Email { get; private set; }
 
         /// <summary>
+        /// Gets the time zone that this hotel is in.
+        /// In the real world this might be the time zone id
+        /// used by NodaTime, i.e. "Pacific/Auckland" for NZST/NZDT
+        /// </summary>
+        /// <value>The time zone.</value>
+        public string TimeZone { get; private set; }
+
+        /// <summary>
         /// Gets the nice-sounding description of the room.
         /// In the real world, there may be different room types.
         /// </summary>
@@ -93,12 +101,13 @@ namespace HotelBookingEngine
     public class BookingRequest
     {
         public BookingRequest(Hotel hotel, int roomQuantity, DateTime checkInLocalDate,
-            DateTime checkOutLocalDate)
+            DateTime checkOutLocalDate, DateTime createdUtcDateTime)
         {
             Hotel = hotel;
             RoomQuantity = roomQuantity;
             CheckInLocalDate = checkInLocalDate;
             CheckOutLocalDate = checkOutLocalDate;
+            CreatedUtcDateTime = createdUtcDateTime;
         }
 
         public int Id { get; private set; }

@@ -26,7 +26,8 @@ namespace HotelBookingEngineTests
         {
             //Arrange
             var creator = new HotelBookingCreator();
-            var bookingRequest = new BookingRequest(null, 2, DateTime.MinValue, DateTime.MaxValue);
+            var bookingRequest = new BookingRequest(null, 2, DateTime.MinValue, DateTime.MaxValue,
+                new DateTime(2018, 09, 05).ToUniversalTime());
 
             //Act
             var result = creator.CreateBooking(bookingRequest);
@@ -42,7 +43,8 @@ namespace HotelBookingEngineTests
         {
             var creator = new HotelBookingCreator();
             var hotel = new Hotel();
-            var bookingRequest = new BookingRequest(hotel, 0, DateTime.MinValue, DateTime.MaxValue);
+            var bookingRequest = new BookingRequest(hotel, 0, DateTime.MinValue, DateTime.MaxValue,
+                new DateTime(2018, 09, 05).ToUniversalTime());
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -56,7 +58,8 @@ namespace HotelBookingEngineTests
         {
             var creator = new HotelBookingCreator();
             var hotel = new Hotel();
-            var bookingRequest = new BookingRequest(hotel, -5, DateTime.MinValue, DateTime.MaxValue);
+            var bookingRequest = new BookingRequest(hotel, -5, DateTime.MinValue, DateTime.MaxValue,
+                new DateTime(2018, 09, 05).ToUniversalTime());
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -71,7 +74,8 @@ namespace HotelBookingEngineTests
             var creator = new HotelBookingCreator();
             var hotel = new Hotel();
             var bookingRequest = new BookingRequest(hotel, 5,
-                new DateTime(2018, 10, 30), new DateTime(2018, 09, 05));
+                new DateTime(2018, 10, 30), new DateTime(2018, 09, 05),
+                new DateTime(2018, 09, 05).ToUniversalTime());
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -86,7 +90,24 @@ namespace HotelBookingEngineTests
             var creator = new HotelBookingCreator();
             var hotel = new Hotel();
             var bookingRequest = new BookingRequest(hotel, 5,
-                new DateTime(2018, 10, 30), new DateTime(2018, 10, 30));
+                new DateTime(2018, 10, 30), new DateTime(2018, 10, 30),
+                new DateTime(2018, 09, 05).ToUniversalTime());
+
+            var result = creator.CreateBooking(bookingRequest);
+
+            Assert.NotNull(result);
+            Assert.Null(result.ConfirmedBooking);
+            Assert.Equal("Invalid dates", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void CreateBooking_RequestWithCheckInDateBeforeCreated_ErrorResult_InvalidDates()
+        {
+            var creator = new HotelBookingCreator();
+            var hotel = new Hotel();
+            var bookingRequest = new BookingRequest(hotel, 5,
+                new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),
+                new DateTime(2018, 11, 05).ToUniversalTime());
 
             var result = creator.CreateBooking(bookingRequest);
 

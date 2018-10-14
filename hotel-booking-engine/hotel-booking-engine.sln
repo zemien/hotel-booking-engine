@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hotel-booking-engine", "hotel-booking-engine\hotel-booking-engine.csproj", "{395DEFEC-E8E7-4E3A-9710-BA201324D997}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hotel-booking-engine-tests", "hotel-booking-engine-tests\hotel-booking-engine-tests.csproj", "{B263C81E-8D40-4D0B-A08D-5CD1F5F05DC8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{395DEFEC-E8E7-4E3A-9710-BA201324D997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{395DEFEC-E8E7-4E3A-9710-BA201324D997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{395DEFEC-E8E7-4E3A-9710-BA201324D997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{395DEFEC-E8E7-4E3A-9710-BA201324D997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B263C81E-8D40-4D0B-A08D-5CD1F5F05DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B263C81E-8D40-4D0B-A08D-5CD1F5F05DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B263C81E-8D40-4D0B-A08D-5CD1F5F05DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B263C81E-8D40-4D0B-A08D-5CD1F5F05DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

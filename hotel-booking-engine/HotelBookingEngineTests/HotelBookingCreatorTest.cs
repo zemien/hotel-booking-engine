@@ -26,7 +26,7 @@ namespace HotelBookingEngineTests
         {
             //Arrange
             var creator = new HotelBookingCreator();
-            var bookingRequest = new BookingRequest();
+            var bookingRequest = new BookingRequest(null, 2, DateTime.MinValue, DateTime.MaxValue);
 
             //Act
             var result = creator.CreateBooking(bookingRequest);
@@ -35,6 +35,64 @@ namespace HotelBookingEngineTests
             Assert.NotNull(result);
             Assert.Null(result.ConfirmedBooking);
             Assert.Equal("No hotel", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void CreateBooking_RequestWithZeroRoomQuantity_ErrorResult_InvalidRoomQuantity()
+        {
+            var creator = new HotelBookingCreator();
+            var hotel = new Hotel();
+            var bookingRequest = new BookingRequest(hotel, 0, DateTime.MinValue, DateTime.MaxValue);
+
+            var result = creator.CreateBooking(bookingRequest);
+
+            Assert.NotNull(result);
+            Assert.Null(result.ConfirmedBooking);
+            Assert.Equal("Invalid room quantity", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void CreateBooking_RequestWithNegativeRoomQuantity_ErrorResult_InvalidRoomQuantity()
+        {
+            var creator = new HotelBookingCreator();
+            var hotel = new Hotel();
+            var bookingRequest = new BookingRequest(hotel, -5, DateTime.MinValue, DateTime.MaxValue);
+
+            var result = creator.CreateBooking(bookingRequest);
+
+            Assert.NotNull(result);
+            Assert.Null(result.ConfirmedBooking);
+            Assert.Equal("Invalid room quantity", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void CreateBooking_RequestWithCheckInDateGreaterThanCheckOutDate_ErrorResult_InvalidDates()
+        {
+            var creator = new HotelBookingCreator();
+            var hotel = new Hotel();
+            var bookingRequest = new BookingRequest(hotel, 5,
+                new DateTime(2018, 10, 30), new DateTime(2018, 09, 05));
+
+            var result = creator.CreateBooking(bookingRequest);
+
+            Assert.NotNull(result);
+            Assert.Null(result.ConfirmedBooking);
+            Assert.Equal("Invalid dates", result.ErrorMessage);
+        }
+
+        [Fact]
+        public void CreateBooking_RequestWithCheckInDateEqualToCheckOutDate_ErrorResult_InvalidDates()
+        {
+            var creator = new HotelBookingCreator();
+            var hotel = new Hotel();
+            var bookingRequest = new BookingRequest(hotel, 5,
+                new DateTime(2018, 10, 30), new DateTime(2018, 10, 30));
+
+            var result = creator.CreateBooking(bookingRequest);
+
+            Assert.NotNull(result);
+            Assert.Null(result.ConfirmedBooking);
+            Assert.Equal("Invalid dates", result.ErrorMessage);
         }
     }
 }

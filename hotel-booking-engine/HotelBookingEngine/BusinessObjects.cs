@@ -92,6 +92,15 @@ namespace HotelBookingEngine
     /// </summary>
     public class BookingRequest
     {
+        public BookingRequest(Hotel hotel, int roomQuantity, DateTime checkInLocalDate,
+            DateTime checkOutLocalDate)
+        {
+            Hotel = hotel;
+            RoomQuantity = roomQuantity;
+            CheckInLocalDate = checkInLocalDate;
+            CheckOutLocalDate = checkOutLocalDate;
+        }
+
         public int Id { get; private set; }
         public Hotel Hotel { get; private set; }
         public int RoomQuantity { get; private set; }

@@ -39,6 +39,12 @@ namespace HotelBookingEngine
                 return "Invalid dates";
             }
 
+            //Problem - how do you unit test this behaviour when DateTime.Today changes day-to-day?
+            if (bookingRequest.CheckInLocalDate < DateTime.Today)
+            {
+                return "Invalid dates";
+            }
+
             return null;
         }
     }

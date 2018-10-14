@@ -7,7 +7,7 @@
  */
 using System;
 
-namespace hotel_booking_engine
+namespace HotelBookingEngine
 {
     public class Hotel
     {

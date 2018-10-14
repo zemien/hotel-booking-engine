@@ -1,4 +1,4 @@
-﻿namespace hotel_booking_engine
+﻿namespace HotelBookingEngine
 {
     public interface IHotelBookingCreator
     {

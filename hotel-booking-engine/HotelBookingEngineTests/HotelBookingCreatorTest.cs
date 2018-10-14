@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace hotel_booking_engine_tests
+namespace HotelBookingEngineTests
 {
     public class HotelBookingCreatorTest
     {

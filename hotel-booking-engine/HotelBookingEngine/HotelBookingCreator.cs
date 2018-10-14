@@ -6,27 +6,40 @@ namespace HotelBookingEngine
     {
         public BookingRequestResult CreateBooking(BookingRequest bookingRequest)
         {
+            //In the real world, this might produce an error object instead
+            var errorMessage = ValidateBooking(bookingRequest);
+
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                return new BookingRequestResult(null, errorMessage);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private string ValidateBooking(BookingRequest bookingRequest)
+        {
             if (bookingRequest == null)
             {
-                return new BookingRequestResult(null, "No request");
+                return "No request";
             }
 
             if (bookingRequest.Hotel == null)
             {
-                return new BookingRequestResult(null, "No hotel");
+                return "No hotel";
             }
 
             if (bookingRequest.RoomQuantity <= 0)
             {
-                return new BookingRequestResult(null, "Invalid room quantity");
+                return "Invalid room quantity";
             }
 
             if (bookingRequest.CheckInLocalDate >= bookingRequest.CheckOutLocalDate)
             {
-                return new BookingRequestResult(null, "Invalid dates");
+                return "Invalid dates";
             }
 
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

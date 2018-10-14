@@ -126,6 +126,12 @@ namespace HotelBookingEngine
     /// </summary>
     public class BookingRequestResult
     {
+        public BookingRequestResult(Booking confirmedBooking, string errorMessage)
+        {
+            ConfirmedBooking = confirmedBooking;
+            ErrorMessage = errorMessage;
+        }
+
         public Booking ConfirmedBooking { get; private set; }
 
         /// <summary>

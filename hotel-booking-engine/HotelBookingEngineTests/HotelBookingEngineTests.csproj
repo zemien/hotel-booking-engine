@@ -16,6 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\hotel-booking-engine\hotel-booking-engine.csproj" />
+    <ProjectReference Include="..\HotelBookingEngine\HotelBookingEngine.csproj" />
   </ItemGroup>
 </Project>

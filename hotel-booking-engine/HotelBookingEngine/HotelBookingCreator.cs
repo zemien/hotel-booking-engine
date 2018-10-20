@@ -1,9 +1,16 @@
-﻿using System;
+using System;
 
 namespace HotelBookingEngine
 {
     public class HotelBookingCreator : IHotelBookingCreator
     {
+        private readonly IHotelAvailabilityChecker _hotelAvailabilityChecker;
+
+        public HotelBookingCreator(IHotelAvailabilityChecker hotelAvailabilityChecker)
+        {
+            _hotelAvailabilityChecker = hotelAvailabilityChecker;
+        }
+
         public BookingRequestResult CreateBooking(BookingRequest bookingRequest)
         {
             //In the real world, this might produce an error object instead
@@ -45,9 +52,7 @@ namespace HotelBookingEngine
                 return "Invalid dates";
             }
 
-            var dbConnection = "Entity Framework context, perhaps?";
-            var hotelAvailabilityChecker = new DbHotelAvailabilityChecker(dbConnection);
-            if (!hotelAvailabilityChecker.IsAvailable(bookingRequest))
+            if (!_hotelAvailabilityChecker.IsAvailable(bookingRequest))
             {
                 return "No availability";
             }

@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using HotelBookingEngine;
+using Moq;
 
 namespace HotelBookingEngineTests
 {
@@ -10,7 +11,7 @@ namespace HotelBookingEngineTests
         public void CreateBooking_NullRequest_ErrorResult_NoRequest()
         {
             //Arrange
-            var creator = new HotelBookingCreator(new MockHotelAvailabilityChecker());
+            var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
 
             //Act
             var result = creator.CreateBooking(null);
@@ -25,7 +26,7 @@ namespace HotelBookingEngineTests
         public void CreateBooking_RequestWithoutHotel_ErrorResult_NoHotel()
         {
             //Arrange
-            var creator = new HotelBookingCreator(new MockHotelAvailabilityChecker());
+            var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
             var bookingRequest = new BookingRequest(null, 2, DateTime.MinValue, DateTime.MaxValue,
                 new DateTime(2018, 09, 05).ToUniversalTime());
 
@@ -41,7 +42,7 @@ namespace HotelBookingEngineTests
         [Fact]
         public void CreateBooking_RequestWithZeroRoomQuantity_ErrorResult_InvalidRoomQuantity()
         {
-            var creator = new HotelBookingCreator(new MockHotelAvailabilityChecker());
+            var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
             var hotel = new Hotel();
             var bookingRequest = new BookingRequest(hotel, 0, DateTime.MinValue, DateTime.MaxValue,
                 new DateTime(2018, 09, 05).ToUniversalTime());
@@ -56,7 +57,7 @@ namespace HotelBookingEngineTests
         [Fact]
         public void CreateBooking_RequestWithNegativeRoomQuantity_ErrorResult_InvalidRoomQuantity()
         {
-            var creator = new HotelBookingCreator(new MockHotelAvailabilityChecker());
+            var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
             var hotel = new Hotel();
             var bookingRequest = new BookingRequest(hotel, -5, DateTime.MinValue, DateTime.MaxValue,
                 new DateTime(2018, 09, 05).ToUniversalTime());
@@ -71,7 +72,7 @@ namespace HotelBookingEngineTests
         [Fact]
         public void CreateBooking_RequestWithCheckInDateGreaterThanCheckOutDate_ErrorResult_InvalidDates()
         {
-            var creator = new HotelBookingCreator(new MockHotelAvailabilityChecker());
+            var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
             var hotel = new Hotel();
             var bookingRequest = new BookingRequest(hotel, 5,
                 new DateTime(2018, 10, 30), new DateTime(2018, 09, 05),
@@ -87,7 +88,7 @@ namespace HotelBookingEngineTests
         [Fact]
         public void CreateBooking_RequestWithCheckInDateEqualToCheckOutDate_ErrorResult_InvalidDates()
         {
-            var creator = new HotelBookingCreator(new MockHotelAvailabilityChecker());
+            var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
             var hotel = new Hotel();
             var bookingRequest = new BookingRequest(hotel, 5,
                 new DateTime(2018, 10, 30), new DateTime(2018, 10, 30),
@@ -103,7 +104,7 @@ namespace HotelBookingEngineTests
         [Fact]
         public void CreateBooking_RequestWithCheckInDateBeforeCreated_ErrorResult_InvalidDates()
         {
-            var creator = new HotelBookingCreator(new MockHotelAvailabilityChecker());
+            var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
             var hotel = new Hotel();
             var bookingRequest = new BookingRequest(hotel, 5,
                 new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),
@@ -119,7 +120,11 @@ namespace HotelBookingEngineTests
         [Fact]
         public void CreateBooking_RequestNoAvailability_ErrorResult_NoAvailability()
         {
-            var creator = new HotelBookingCreator(new MockHotelAvailabilityChecker());
+            var hotelAvailabilityCheckerStub = new Mock<IHotelAvailabilityChecker>();
+            hotelAvailabilityCheckerStub.Setup(s => s.IsAvailable(It.IsAny<BookingRequest>()))
+                .Returns(false);
+
+            var creator = new HotelBookingCreator(hotelAvailabilityCheckerStub.Object);
             var hotel = new Hotel();
             var bookingRequest = new BookingRequest(hotel, 5,
                 new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),

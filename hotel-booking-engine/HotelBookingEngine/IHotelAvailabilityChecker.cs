@@ -26,17 +26,4 @@
             throw new System.NotImplementedException();
         }
     }
-
-    /// <summary>
-    /// Mock hotel availability checker.
-    /// This is what someone would do in the days before mock/stub frameworks.
-    /// </summary>
-    public class MockHotelAvailabilityChecker : IHotelAvailabilityChecker
-    {
-        public bool IsAvailable(BookingRequest bookingRequest)
-        {
-            //This works well until you need a mock checker that returns true
-            return false;
-        }
-    }
 }

@@ -44,6 +44,11 @@ namespace HotelBookingEngine
 
     public class Booking
     {
+        public Booking(BookingRequest bookingRequest)
+        {
+            BookingRequest = bookingRequest;
+        }
+
         public int Id { get; private set; }
         public Hotel Hotel { get; private set; }
 

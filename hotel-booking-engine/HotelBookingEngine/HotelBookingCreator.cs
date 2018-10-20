@@ -21,7 +21,9 @@ namespace HotelBookingEngine
                 return new BookingRequestResult(null, errorMessage);
             }
 
-            throw new NotImplementedException();
+            //Prepare result package
+            var confirmedBooking = new Booking(bookingRequest);
+            return new BookingRequestResult(confirmedBooking, null);
         }
 
         private string ValidateBooking(BookingRequest bookingRequest)

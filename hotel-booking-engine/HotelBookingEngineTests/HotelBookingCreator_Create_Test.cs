@@ -7,6 +7,15 @@ namespace HotelBookingEngineTests
 {
     public class HotelBookingCreator_Create_Test
     {
+        static BookingRequest CreateValidBookingRequest()
+        {
+            var hotel = new Hotel();
+            var bookingRequest = new BookingRequest(hotel, 5,
+                new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),
+                new DateTime(2018, 05, 05).ToUniversalTime());
+            return bookingRequest;
+        }
+
         [Fact]
         public void CreateBooking_RequestValid_NoErrorMessage()
         {
@@ -15,10 +24,7 @@ namespace HotelBookingEngineTests
                 .Returns(true);
 
             var creator = new HotelBookingCreator(hotelAvailabilityCheckerStub.Object);
-            var hotel = new Hotel();
-            var bookingRequest = new BookingRequest(hotel, 5,
-                new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),
-                new DateTime(2018, 05, 05).ToUniversalTime());
+            var bookingRequest = CreateValidBookingRequest();
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -36,9 +42,7 @@ namespace HotelBookingEngineTests
 
             var creator = new HotelBookingCreator(hotelAvailabilityCheckerStub.Object);
             var hotel = new Hotel();
-            var bookingRequest = new BookingRequest(hotel, 5,
-                new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),
-                new DateTime(2018, 05, 05).ToUniversalTime());
+            var bookingRequest = CreateValidBookingRequest();
 
             var result = creator.CreateBooking(bookingRequest);
 

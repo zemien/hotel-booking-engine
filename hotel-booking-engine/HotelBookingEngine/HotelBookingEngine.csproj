@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>hotel_booking_engine</RootNamespace>
+    <RootNamespace>HotelBookingEngine</RootNamespace>
   </PropertyGroup>
 
 </Project>

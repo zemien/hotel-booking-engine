@@ -1,5 +1,4 @@
-﻿using System;
-using HotelBookingEngine;
+﻿using HotelBookingEngine;
 using Xunit;
 using Moq;
 
@@ -58,20 +57,25 @@ namespace HotelBookingEngineTests
             Assert.Equal("Mercure Hotels Taupo", result.ConfirmedBooking.Hotel.Name);
         }
 
-        [Fact]
-        public void CreateBooking_RequestValid_BookingRoomRate_UsesDiscount()
+        [Theory]
+        [InlineData("50% discount", 100, 0.5, 50)]
+        [InlineData("No discount", 100, 0, 100)]
+        [InlineData("10% discount", 100, 0.1, 90)]
+        [InlineData("100% discount", 100, 1, 0)]
+        [InlineData("20.8% discount", 100, 0.28, 72)]
+        public void CreateBooking_RequestValid_BookingRoomRate_UsesDiscount(string testName, double publishedRoomRate, double discount, double bookingRoomRate)
         {
             var creator = CreateAvailableBookingCreator();
 
             var bookingRequestBuilder = new BookingRequestObjectBuilder();
-            bookingRequestBuilder.SetDiscount(0.5);
-            bookingRequestBuilder.SetPublishedRoomRate(100);
+            bookingRequestBuilder.SetDiscount(discount);
+            bookingRequestBuilder.SetPublishedRoomRate(publishedRoomRate);
 
             var result = creator.CreateBooking(bookingRequestBuilder.Build());
 
             Assert.NotNull(result);
             Assert.NotNull(result.ConfirmedBooking);
-            Assert.Equal(50, result.ConfirmedBooking.BookingRoomRate);
+            Assert.Equal(bookingRoomRate, result.ConfirmedBooking.BookingRoomRate);
         }
     }
 }

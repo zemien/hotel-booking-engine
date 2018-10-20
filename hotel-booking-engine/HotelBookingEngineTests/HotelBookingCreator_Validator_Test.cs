@@ -28,7 +28,7 @@ namespace HotelBookingEngineTests
             //Arrange
             var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
             var bookingRequest = new BookingRequest(null, 2, DateTime.MinValue, DateTime.MaxValue,
-                new DateTime(2018, 09, 05).ToUniversalTime());
+                new DateTime(2018, 09, 05).ToUniversalTime(), 0);
 
             //Act
             var result = creator.CreateBooking(bookingRequest);
@@ -43,9 +43,9 @@ namespace HotelBookingEngineTests
         public void CreateBooking_RequestWithZeroRoomQuantity_ErrorResult_InvalidRoomQuantity()
         {
             var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
-            var hotel = new Hotel();
+            var hotel = new Hotel("Tongariro Lodge", 200);
             var bookingRequest = new BookingRequest(hotel, 0, DateTime.MinValue, DateTime.MaxValue,
-                new DateTime(2018, 09, 05).ToUniversalTime());
+                new DateTime(2018, 09, 05).ToUniversalTime(), 0);
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -58,9 +58,9 @@ namespace HotelBookingEngineTests
         public void CreateBooking_RequestWithNegativeRoomQuantity_ErrorResult_InvalidRoomQuantity()
         {
             var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
-            var hotel = new Hotel();
+            var hotel = new Hotel("Tongariro Lodge", 200);
             var bookingRequest = new BookingRequest(hotel, -5, DateTime.MinValue, DateTime.MaxValue,
-                new DateTime(2018, 09, 05).ToUniversalTime());
+                new DateTime(2018, 09, 05).ToUniversalTime(), 0);
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -73,10 +73,10 @@ namespace HotelBookingEngineTests
         public void CreateBooking_RequestWithCheckInDateGreaterThanCheckOutDate_ErrorResult_InvalidDates()
         {
             var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
-            var hotel = new Hotel();
+            var hotel = new Hotel("Tongariro Lodge", 200);
             var bookingRequest = new BookingRequest(hotel, 5,
                 new DateTime(2018, 10, 30), new DateTime(2018, 09, 05),
-                new DateTime(2018, 09, 05).ToUniversalTime());
+                new DateTime(2018, 09, 05).ToUniversalTime(), 0);
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -89,10 +89,10 @@ namespace HotelBookingEngineTests
         public void CreateBooking_RequestWithCheckInDateEqualToCheckOutDate_ErrorResult_InvalidDates()
         {
             var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
-            var hotel = new Hotel();
+            var hotel = new Hotel("Tongariro Lodge", 200);
             var bookingRequest = new BookingRequest(hotel, 5,
                 new DateTime(2018, 10, 30), new DateTime(2018, 10, 30),
-                new DateTime(2018, 09, 05).ToUniversalTime());
+                new DateTime(2018, 09, 05).ToUniversalTime(), 0);
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -105,10 +105,10 @@ namespace HotelBookingEngineTests
         public void CreateBooking_RequestWithCheckInDateBeforeCreated_ErrorResult_InvalidDates()
         {
             var creator = new HotelBookingCreator(new Mock<IHotelAvailabilityChecker>().Object);
-            var hotel = new Hotel();
+            var hotel = new Hotel("Tongariro Lodge", 200);
             var bookingRequest = new BookingRequest(hotel, 5,
                 new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),
-                new DateTime(2018, 11, 05).ToUniversalTime());
+                new DateTime(2018, 11, 05).ToUniversalTime(), 0);
 
             var result = creator.CreateBooking(bookingRequest);
 
@@ -125,7 +125,7 @@ namespace HotelBookingEngineTests
                 .Returns(false);
 
             var creator = new HotelBookingCreator(hotelAvailabilityCheckerStub.Object);
-            var hotel = new Hotel();
+            var hotel = new Hotel("Tongariro Lodge", 200);
             var bookingRequest = BookingRequestObjectMother.CreateValidBookingRequest();
 
             var result = creator.CreateBooking(bookingRequest);

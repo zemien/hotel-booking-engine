@@ -11,6 +11,12 @@ namespace HotelBookingEngine
 {
     public class Hotel
     {
+        public Hotel(string hotelName, double publishedRoomRate)
+        {
+            Name = hotelName;
+            PublishedRoomRate = publishedRoomRate;
+        }
+
         public int Id { get; private set; }
         public string Name { get; private set; }
         public string Address { get; private set; }
@@ -44,9 +50,11 @@ namespace HotelBookingEngine
 
     public class Booking
     {
-        public Booking(BookingRequest bookingRequest)
+        public Booking(BookingRequest bookingRequest, Hotel hotel, double bookingRoomRate)
         {
             BookingRequest = bookingRequest;
+            Hotel = hotel;
+            BookingRoomRate = bookingRoomRate;
         }
 
         public int Id { get; private set; }
@@ -106,13 +114,14 @@ namespace HotelBookingEngine
     public class BookingRequest
     {
         public BookingRequest(Hotel hotel, int roomQuantity, DateTime checkInLocalDate,
-            DateTime checkOutLocalDate, DateTime createdUtcDateTime)
+            DateTime checkOutLocalDate, DateTime createdUtcDateTime, double discount)
         {
             Hotel = hotel;
             RoomQuantity = roomQuantity;
             CheckInLocalDate = checkInLocalDate;
             CheckOutLocalDate = checkOutLocalDate;
             CreatedUtcDateTime = createdUtcDateTime;
+            Discount = discount;
         }
 
         public int Id { get; private set; }

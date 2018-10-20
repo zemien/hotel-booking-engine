@@ -12,10 +12,10 @@ namespace HotelBookingEngineTests
     {
         public static BookingRequest CreateValidBookingRequest()
         {
-            var hotel = new Hotel();
+            var hotel = new Hotel("Tongariro Lodge", 200);
             var bookingRequest = new BookingRequest(hotel, 5,
                 new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),
-                new DateTime(2018, 05, 05).ToUniversalTime());
+                new DateTime(2018, 05, 05).ToUniversalTime(), 0);
             return bookingRequest;
         }
     }

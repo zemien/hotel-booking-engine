@@ -22,7 +22,9 @@ namespace HotelBookingEngine
             }
 
             //Prepare result package
-            var confirmedBooking = new Booking(bookingRequest);
+            var bookingRoomRate = (1 - bookingRequest.Discount) * bookingRequest.Hotel.PublishedRoomRate;
+            var confirmedBooking = new Booking(bookingRequest, bookingRequest.Hotel, bookingRoomRate);
+
             return new BookingRequestResult(confirmedBooking, null);
         }
 

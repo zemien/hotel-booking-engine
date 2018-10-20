@@ -126,9 +126,7 @@ namespace HotelBookingEngineTests
 
             var creator = new HotelBookingCreator(hotelAvailabilityCheckerStub.Object);
             var hotel = new Hotel();
-            var bookingRequest = new BookingRequest(hotel, 5,
-                new DateTime(2018, 10, 30), new DateTime(2018, 11, 07),
-                new DateTime(2018, 05, 05).ToUniversalTime());
+            var bookingRequest = BookingRequestObjectMother.CreateValidBookingRequest();
 
             var result = creator.CreateBooking(bookingRequest);
 

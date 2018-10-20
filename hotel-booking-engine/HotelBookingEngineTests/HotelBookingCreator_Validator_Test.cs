@@ -5,7 +5,7 @@ using Moq;
 
 namespace HotelBookingEngineTests
 {
-    public class HotelBookingCreatorTest
+    public class HotelBookingCreator_Validator_Test
     {
         [Fact]
         public void CreateBooking_NullRequest_ErrorResult_NoRequest()

@@ -45,6 +45,13 @@ namespace HotelBookingEngine
                 return "Invalid dates";
             }
 
+            var dbConnection = "Entity Framework context, perhaps?";
+            var hotelAvailabilityChecker = new DbHotelAvailabilityChecker(dbConnection);
+            if (!hotelAvailabilityChecker.IsAvailable(bookingRequest))
+            {
+                return "No availability";
+            }
+
             return null;
         }
 
